@@ -1,0 +1,61 @@
+﻿<Window x:Class="DemoApp.ProductsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DemoApp"
+        mc:Ignorable="d"
+        Title="ProductsWindow" MinHeight="450" MinWidth="800">
+	<Window.Resources>
+		<BitmapImage x:Key="nullImage" UriSource="/Resources/picture.png"/>
+	</Window.Resources>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*"/>
+			<RowDefinition Height="8*"/>
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+			<ColumnDefinition/>
+		</Grid.ColumnDefinitions>
+		<Button Content="Назад" Grid.Row="0" x:Name="backButton" Click="backButton_Click"/>
+		<ComboBox x:Name="filterComboBox" Grid.Row="0" Grid.Column="1" SelectionChanged="filterComboBox_SelectionChanged" Margin="5,10,5,10"/>
+		<ListView Grid.ColumnSpan="3" Grid.Row="1" x:Name="productsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+			<ListView.ItemTemplate>
+				<DataTemplate>
+					<Border BorderBrush="Black" BorderThickness="1" Background="{Binding ElementName=colorOfItem}">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="3*"/>
+								<ColumnDefinition Width="6*"/>
+								<ColumnDefinition Width="2*"/>
+							</Grid.ColumnDefinitions>
+							<Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
+								<Image Source="{Binding Path=ProductPhoto, FallbackValue={StaticResource nullImage}}"/>
+							</Border>
+							<Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+								<Grid>
+									<Grid.RowDefinitions>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="2*"/>
+										<RowDefinition Height="2*"/>
+									</Grid.RowDefinitions>
+									<Label Grid.Row="0" Content="{Binding ProductName}"/>
+									<Label Grid.Row="1" Content="{Binding ProductDescription}"/>
+									<Label Grid.Row="2" Content="{Binding ProductManufacturer.ProductManufacturerName}"/>
+									<Label Grid.Row="3" Content="{Binding ProductCost}"/>
+								</Grid>
+							</Border>
+							<Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+								<Label Content="{Binding ProductDiscountAmount}"/>
+							</Border>
+						</Grid>
+					</Border>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
+	</Grid>
+</Window>

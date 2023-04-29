@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\B538G6.jpg" />
+    <None Remove="Resources\captcha.png" />
+    <None Remove="Resources\D648N7.jpg" />
+    <None Remove="Resources\D830R5.jpg" />
+    <None Remove="Resources\E324U7.jpg" />
+    <None Remove="Resources\F735B6.jpg" />
+    <None Remove="Resources\F746E6.jpg" />
+    <None Remove="Resources\F937G4.jpg" />
+    <None Remove="Resources\G403T5.jpg" />
+    <None Remove="Resources\G598Y6.jpg" />
+    <None Remove="Resources\logo.png" />
+    <None Remove="Resources\picture.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\B538G6.jpg" />
+    <Resource Include="Resources\captcha.png" />
+    <Resource Include="Resources\D648N7.jpg" />
+    <Resource Include="Resources\D830R5.jpg" />
+    <Resource Include="Resources\E324U7.jpg" />
+    <Resource Include="Resources\F735B6.jpg" />
+    <Resource Include="Resources\F746E6.jpg" />
+    <Resource Include="Resources\F937G4.jpg" />
+    <Resource Include="Resources\G403T5.jpg" />
+    <Resource Include="Resources\G598Y6.jpg" />
+    <Resource Include="Resources\icon.ico" />
+    <Resource Include="Resources\logo.png" />
+    <Resource Include="Resources\picture.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="7.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
