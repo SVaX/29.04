@@ -70,3 +70,4 @@ C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\DemoApp.Properties.Resources.res
 C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\DemoApp.csproj.GenerateResource.cache
 C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\CaptchaWindow.g.cs
 C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\CaptchaWindow.baml
+C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs

@@ -60,11 +60,6 @@ namespace DemoApp
 						product.ProductManufacturer = manufacturer;
 					}
 				}
-
-				if (product.ProductDiscountAmount >= 15)
-				{
-					colorOfItem = "#7fff00";
-				}
 			}
 
 			filterComboBox.ItemsSource = new List<string>

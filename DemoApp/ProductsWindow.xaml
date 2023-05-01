@@ -4,9 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DemoApp"
+		xmlns:converter="clr-namespace:DemoApp.Models;assembly="
         mc:Ignorable="d"
         Title="ProductsWindow" MinHeight="450" MinWidth="800">
 	<Window.Resources>
+		<converter:CutOffConverter x:Key="DiscountConverter" Cutoff="15"/>
+		<Style TargetType="Border" x:Key="mainBorder">
+			<Setter Property="Background" Value="White"/>
+			<Style.Triggers>
+				<DataTrigger Binding="{Binding ProductDiscountAmount,Converter={StaticResource DiscountConverter}}">
+					<DataTrigger.Value>true</DataTrigger.Value>
+					<Setter Property="Background" Value="#7fff00"/>
+				</DataTrigger>
+			</Style.Triggers>
+		</Style>
 		<BitmapImage x:Key="nullImage" UriSource="/Resources/picture.png"/>
 	</Window.Resources>
 
@@ -25,7 +36,7 @@
 		<ListView Grid.ColumnSpan="3" Grid.Row="1" x:Name="productsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<Border BorderBrush="Black" BorderThickness="1" Background="{Binding ElementName=colorOfItem}">
+					<Border BorderBrush="Black" BorderThickness="1" Style="{StaticResource mainBorder}">
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="3*"/>
