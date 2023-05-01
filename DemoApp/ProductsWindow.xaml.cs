@@ -30,7 +30,11 @@ namespace DemoApp
 		/// Контекст БД.
 		/// </summary>
 		public DemoDbContext db = new DemoDbContext();
-		
+
+		List<Product> productList = new List<Product>();
+
+		List<Product> foundProducts = new List<Product>();
+
 		/// <summary>
 		/// Инициализация окна
 		/// </summary>
@@ -40,14 +44,12 @@ namespace DemoApp
 		{
 			InitializeComponent();
 
-			string colorOfItem;
+			productList = db.Products.ToList();
 
 			if (Authorized)
 			{
 				_currentUser = user;
 			}
-
-			List<Product> productList = db.Products.ToList();
 
 			foreach (Product product in productList)
 			{
@@ -62,14 +64,24 @@ namespace DemoApp
 				}
 			}
 
-			filterComboBox.ItemsSource = new List<string>
+			discountFilterComboBox.ItemsSource = new List<string>
 			{
-				"0-10%", "10-15%", "15-∞%", "All ranges"
+				"Все диапазоны", "0-10%", "10-15%", "15-∞%" 
+			};
+
+			costFilterComboBox.ItemsSource = new List<string>
+			{
+				"По возрастанию", "По убыванию"
 			};
 
 			productsList.ItemsSource = productList;
+
+			updateRecordAmount();
 		}
 
+		/// <summary>
+		/// Кнопка назад.
+		/// </summary>
 		private void backButton_Click(object sender, RoutedEventArgs e)
 		{
 			var logWIndow = new LoginWindow();
@@ -77,31 +89,82 @@ namespace DemoApp
 			this.Close();
 		}
 
+		/// <summary>
+		/// Событие изменения выбора фильтрации по скидке.
+		/// </summary>
 		private void filterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			switch (filterComboBox.SelectedIndex)
+			productList = db.Products.ToList();
+			switch (discountFilterComboBox.SelectedIndex)
 			{
-				case 0:
-					{
-						productsList.ItemsSource = db.Products.Where(p => p.ProductDiscountAmount < 10).ToList();
-						break;
-					}
 				case 1:
 					{
-						productsList.ItemsSource = db.Products.Where(p => p.ProductDiscountAmount > 10 && p.ProductDiscountAmount < 15).ToList();
+						productList = db.Products.Where(p => p.ProductDiscountAmount < 10).ToList();
+						productsList.ItemsSource = productList;
+						updateRecordAmount();
 						break;
 					}
 				case 2:
 					{
-						productsList.ItemsSource = db.Products.Where(p => p.ProductDiscountAmount >= 15).ToList();
+						productList = db.Products.Where(p => p.ProductDiscountAmount > 10 && p.ProductDiscountAmount < 15).ToList();
+						productsList.ItemsSource = productList;
+						updateRecordAmount();
 						break;
 					}
 				case 3:
 					{
-						productsList.ItemsSource = db.Products.ToList();
+						productList = db.Products.Where(p => p.ProductDiscountAmount >= 15).ToList();
+						productsList.ItemsSource = productList;
+						updateRecordAmount();
+						break;
+					}
+				case 0:
+					{
+						productList = db.Products.ToList();
+						productsList.ItemsSource = productList;
+						updateRecordAmount();
 						break;
 					}
 			}
+		}
+
+		/// <summary>
+		/// Событие изменения выбора фильтрации по цене.
+		/// </summary>
+		private void costFilterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			switch (costFilterComboBox.SelectedIndex)
+			{
+				case 0:
+					{
+						productsList.ItemsSource = productList.OrderBy(p => p.ProductCost);
+						updateRecordAmount();
+						break;
+					}
+				case 1:
+					{
+						productsList.ItemsSource = productList.OrderByDescending(p => p.ProductCost);
+						updateRecordAmount();
+						break;
+					}
+			}
+		}
+
+		private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			foundProducts = productList.Where(p => p.ProductName.ToLower().Contains(searchTextBox.Text.ToLower())).ToList();
+			productsList.ItemsSource = foundProducts;
+			updateAfterSearch();
+		}
+
+		private void updateRecordAmount()
+		{
+			recordAmountLabel.Content = $"{productsList.Items.Count} из {productList.Count}";
+		}
+
+		private void updateAfterSearch()
+		{
+			recordAmountLabel.Content = $"{productsList.Items.Count} из {foundProducts.Count}";
 		}
 	}
 }
