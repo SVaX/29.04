@@ -10,11 +10,17 @@
     <Compile Update="CaptchaWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="EditProductsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="ProductsWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="EditProductsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="LoginWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

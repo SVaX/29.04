@@ -166,5 +166,19 @@ namespace DemoApp
 		{
 			recordAmountLabel.Content = $"{productsList.Items.Count} из {foundProducts.Count}";
 		}
-	}
+
+        private void productsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+			if (_currentUser != null && _currentUser.RoleId == 2)
+			{
+				var window = new EditProductsWindow((Product)productsList.SelectedItem, _currentUser);
+				window.Show();
+				this.Close();
+			}
+			else
+			{
+				return;
+			}
+		}
+    }
 }

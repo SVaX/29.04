@@ -34,14 +34,14 @@
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 		<Button Content="Назад" Grid.Row="0" x:Name="backButton" Click="backButton_Click"/>
-		<ComboBox x:Name="discountFilterComboBox" Grid.Row="0" Grid.Column="1" SelectionChanged="filterComboBox_SelectionChanged" Margin="5,10,5,10"/>
-		<ComboBox x:Name="costFilterComboBox" Grid.Row="0" Grid.Column="2" SelectionChanged="costFilterComboBox_SelectionChanged" Margin="5,10,5,10"/>
+		<ComboBox x:Name="discountFilterComboBox" Grid.Row="0" Grid.Column="1" SelectionChanged="filterComboBox_SelectionChanged"/>
+		<ComboBox x:Name="costFilterComboBox" Grid.Row="0" Grid.Column="2" SelectionChanged="costFilterComboBox_SelectionChanged"/>
 		<TextBox x:Name="searchTextBox" Grid.Row="0" Grid.Column="3" TextChanged="searchTextBox_TextChanged"/>
 		<Label x:Name="recordAmountLabel" Grid.Row="0" Grid.Column="4"/>
-		<ListView Grid.ColumnSpan="5" Grid.Row="1" x:Name="productsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch">
+		<ListView Grid.ColumnSpan="5" Grid.Row="1" x:Name="productsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" SelectionChanged="productsList_SelectionChanged">
 			<ListView.ItemTemplate>
 				<DataTemplate>
-					<Border BorderBrush="Black" BorderThickness="1" Style="{StaticResource mainBorder}">
+                    <Border BorderBrush="Black" BorderThickness="1" Style="{StaticResource mainBorder}" >
 						<Grid>
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="3*"/>
@@ -49,7 +49,7 @@
 								<ColumnDefinition Width="2*"/>
 							</Grid.ColumnDefinitions>
 							<Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
-								<Image Source="{Binding Path=ProductPhoto, FallbackValue={StaticResource nullImage}}"/>
+                                <Image Source="{Binding Path=ProductPhoto, FallbackValue={StaticResource nullImage}}"/>
 							</Border>
 							<Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
 								<Grid>
@@ -59,14 +59,14 @@
 										<RowDefinition Height="2*"/>
 										<RowDefinition Height="2*"/>
 									</Grid.RowDefinitions>
-									<Label Grid.Row="0" Content="{Binding ProductName}"/>
-									<Label Grid.Row="1" Content="{Binding ProductDescription}"/>
-									<Label Grid.Row="2" Content="{Binding ProductManufacturer.ProductManufacturerName}"/>
-									<Label Grid.Row="3" Content="{Binding ProductCost}"/>
+                                    <Label Grid.Row="0" Content="{Binding ProductName}"/>
+                                    <Label Grid.Row="1" Content="{Binding ProductDescription}" />
+                                    <Label Grid.Row="2" Content="{Binding ProductManufacturer.ProductManufacturerName}"/>
+                                    <Label Grid.Row="3" Content="{Binding ProductCost}"/>
 								</Grid>
 							</Border>
 							<Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
-								<Label Content="{Binding ProductDiscountAmount}"/>
+                                <Label Content="{Binding ProductDiscountAmount}"/>
 							</Border>
 						</Grid>
 					</Border>
