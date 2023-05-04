@@ -96,9 +96,21 @@ namespace DemoApp
 				return;
 			}
 
+			if (!int.TryParse(quantityTextBox.Text, out int valueHere))
+			{
+				MessageBox.Show("Кол-во товара должно быть указано числом!");
+				return;
+			}
+
 			if (Convert.ToInt16(discountTextBox.Text) > Convert.ToInt16(maxDiscountTextBox.Text))
 			{
 				MessageBox.Show("Скидка должна быть меньше максимальной!");
+				return;
+			}
+
+			if (Convert.ToDecimal(costTextBox.Text, CultureInfo.InvariantCulture) <= 0)
+			{
+				MessageBox.Show("Цена должна быть больше нуля!");
 				return;
 			}
 
