@@ -7,6 +7,9 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="AddProductsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="CaptchaWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -18,6 +21,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="AddProductsWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="EditProductsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>

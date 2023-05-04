@@ -44,7 +44,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
-                <RowDefinition Height="3*"/>
+                <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <Label Content="Артикул" Grid.Row="0" Grid.Column="0" />
             <TextBox Grid.Row="1" Grid.Column="0" x:Name="articleTextBox" IsEnabled="False"/>
@@ -53,7 +53,7 @@
             <TextBox Grid.Row="3" Grid.Column="0" x:Name="nameTextBox"/>
             
             <Label Content="Единица измерения" Grid.Row="4" Grid.Column="0"/>
-            <ComboBox Grid.Row="5" Grid.Column="0" x:Name="unitTypeComboBox"/>
+            <ComboBox Grid.Row="5" Grid.Column="0" x:Name="unitTypeComboBox" SelectionChanged="unitTypeComboBox_SelectionChanged"/>
             
             <Label Content="Стоимость" Grid.Row="6" Grid.Column="0"/>
             <TextBox Grid.Row="7" Grid.Column="0" x:Name="costTextBox"/>
@@ -68,7 +68,7 @@
             <TextBox Grid.Row="1" Grid.Column="1" x:Name="supplierTextBox"/>
             
             <Label Content="Категория товара" Grid.Row="2" Grid.Column="1"/>
-            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="categoryComboBox"/>
+            <ComboBox Grid.Row="3" Grid.Column="1" x:Name="categoryComboBox" SelectionChanged="categoryComboBox_SelectionChanged"/>
             
             <Label Content="Действующая скидка" Grid.Row="4" Grid.Column="1"/>
             <TextBox Grid.Row="5" Grid.Column="1" x:Name="discountTextBox"/>

@@ -146,3 +146,11 @@ C:\2904\DemoApp\obj\Debug\net6.0-windows\DemoApp.genruntimeconfig.cache
 C:\2904\DemoApp\obj\Debug\net6.0-windows\ref\DemoApp.dll
 C:\2904\DemoApp\obj\Debug\net6.0-windows\EditProductsWindow.g.cs
 C:\2904\DemoApp\obj\Debug\net6.0-windows\EditProductsWindow.baml
+C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\EditProductsWindow.g.cs
+C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\EditProductsWindow.baml
+C:\src\DemoApp\DemoApp\bin\Debug\net6.0-windows\Microsoft.Build.dll
+C:\src\DemoApp\DemoApp\bin\Debug\net6.0-windows\Microsoft.IO.Redist.dll
+C:\src\DemoApp\DemoApp\bin\Debug\net6.0-windows\Microsoft.NET.StringTools.dll
+C:\src\DemoApp\DemoApp\bin\Debug\net6.0-windows\System.Reflection.MetadataLoadContext.dll
+C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\AddProductsWindow.g.cs
+C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\AddProductsWindow.baml

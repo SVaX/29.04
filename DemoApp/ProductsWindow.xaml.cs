@@ -77,6 +77,11 @@ namespace DemoApp
 			productsList.ItemsSource = productList;
 
 			updateRecordAmount();
+
+			if (_currentUser.RoleId == 2)
+			{
+				addButton.Visibility = Visibility.Visible;
+			}
 		}
 
 		/// <summary>
@@ -180,5 +185,12 @@ namespace DemoApp
 				return;
 			}
 		}
-    }
+
+		private void addButton_Click(object sender, RoutedEventArgs e)
+		{
+			var window = new AddProductsWindow(_currentUser);
+			window.Show();
+			this.Close();
+		}
+	}
 }

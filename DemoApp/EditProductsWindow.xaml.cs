@@ -15,6 +15,8 @@ using DemoApp.Models;
 using Microsoft.Win32;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Build.Evaluation;
+using System.Globalization;
 
 namespace DemoApp
 {
@@ -33,6 +35,8 @@ namespace DemoApp
             _currentProduct = product;
             _currentUser = user;
 
+            InitSupplierAndManufacturer();
+
             InitImage();
 
             InitComboBoxes();
@@ -50,9 +54,12 @@ namespace DemoApp
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             OrderProduct orderProduct = db.OrderProducts.Where(op => op.ProductId == _currentProduct.ProductId).FirstOrDefault();
-
-            db.OrderProducts.Remove(orderProduct);
-            db.SaveChanges();
+            
+            if (orderProduct != null)
+            {
+				db.OrderProducts.Remove(orderProduct);
+				db.SaveChanges();
+			}
 
             db.Products.Remove(_currentProduct);
             db.SaveChanges();
@@ -77,15 +84,22 @@ namespace DemoApp
                 quantityTextBox,
                 descriptionTextBox
             };
+
             if (categoryComboBox.SelectedItem == null  || !DemoApp.Models.Validation.ValidateTextBoxes(textBoxes))
             {
                 MessageBox.Show("Все поля должны быть заполнены!", "Внимание!");
                 return;
             }
 
+            if (Convert.ToInt16(discountTextBox.Text) > Convert.ToInt16(maxDiscountTextBox.Text))
+            {
+                MessageBox.Show("Скидка должна быть меньше максимальной!");
+                return;
+            }
+
             _currentProduct.ProductName = nameTextBox.Text;
             _currentProduct.UnitTypeId = db.UnitTypes.Where(ut => ut.UnitTypeName == unitTypeComboBox.SelectedItem.ToString()).Select(ut => ut.UnitTypeId).FirstOrDefault();
-            _currentProduct.ProductCost =Convert.ToInt32(costTextBox.Text);
+            _currentProduct.ProductCost =Convert.ToDecimal(costTextBox.Text, CultureInfo.InvariantCulture);
             _currentProduct.ProductMaxDiscountAmount = Convert.ToByte(Convert.ToInt32(maxDiscountTextBox.Text));
 
             var manufacturer = db.ProductManufacturers.Where(m => m.ProductManufacturerName == manufacturerTextBox.Text).FirstOrDefault();
@@ -99,11 +113,14 @@ namespace DemoApp
             _currentProduct.ProductManufacturerId = manufacturer.ProductManufacturerId;
             _currentProduct.ProductSupplierId = supplier.ProductSupplierId;
             _currentProduct.ProductDiscountAmount = Convert.ToByte(Convert.ToInt32(discountTextBox.Text));
-            _currentProduct.ProductQuantityInStock = Convert.ToInt32(quantityTextBox);
+            _currentProduct.ProductQuantityInStock = Convert.ToInt32(quantityTextBox.Text);
             _currentProduct.ProductDescription = descriptionTextBox.Text;
 
             db.Entry(_currentProduct).State = EntityState.Modified;
             db.SaveChanges();
+
+            MessageBox.Show("Товар был изменен!");
+            return;
         }
 
         private bool  ValidateManufacturerAndSupplier(ProductManufacturer man, ProductSupplier sup)
@@ -139,11 +156,11 @@ namespace DemoApp
                 dirInfo = fileInfo.Directory.Parent;
                 parentDirName = dirInfo.ToString() + "\\Resources\\" + ofd.SafeFileName;
 
-                System.IO.File.Copy(filename, parentDirName);
+                System.IO.File.Copy(filename, parentDirName, true);
 
                 _currentProduct.ProductPhoto = ofd.SafeFileName;
 
-                db.Entry(_currentProduct).State = EntityState.Modified;
+				db.Entry(_currentProduct).State = EntityState.Modified;
                 db.SaveChanges();
                 
                 InitImage();
@@ -170,6 +187,25 @@ namespace DemoApp
             }
             imageSource.EndInit();
             productPhoto.Source = imageSource;
+        }
+
+        private void InitSupplierAndManufacturer()
+        {
+            foreach (ProductManufacturer man in db.ProductManufacturers)
+            {
+                if (man.ProductManufacturerId == _currentProduct.ProductManufacturerId)
+                {
+                    _currentProduct.ProductManufacturer = man;
+                }
+            }
+
+            foreach (ProductSupplier sup in db.ProductSuppliers)
+            {
+                if (sup.ProductSupplierId == _currentProduct.ProductSupplierId)
+                {
+                    _currentProduct.ProductSupplier = sup;
+                }
+            }
         }
 
         private void InitTextBoxes()
@@ -206,5 +242,41 @@ namespace DemoApp
                 }
             }
         }
-    }
+
+		private void unitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			try
+			{
+				foreach (var ut in db.UnitTypes)
+				{
+					if (ut.UnitTypeName == unitTypeComboBox.SelectedValue)
+					{
+						_currentProduct.UnitType = ut;
+					}
+				}
+			}
+			catch (InvalidOperationException)
+			{
+				return;
+			}
+		}
+
+		private void categoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			try
+			{
+				foreach (var cat in db.ProductCategories)
+				{
+					if (cat.ProductCategoryName == categoryComboBox.SelectedValue)
+					{
+						_currentProduct.ProductCategory = cat;
+					}
+				}
+			}
+			catch (InvalidOperationException)
+			{
+				return;
+			}
+		}
+	}
 }

@@ -1,7 +1,8 @@
-﻿C:\2904\DemoApp\obj\Debug\net6.0-windows\GeneratedInternalTypeHelper.g.cs
-FC:\2904\DemoApp\App.xaml;;
-FC:\2904\DemoApp\CaptchaWindow.xaml;;
-FC:\2904\DemoApp\EditProductsWindow.xaml;;
-FC:\2904\DemoApp\LoginWindow.xaml;;
-FC:\2904\DemoApp\ProductsWindow.xaml;;
+﻿
+FC:\src\DemoApp\DemoApp\App.xaml;;
+FC:\src\DemoApp\DemoApp\AddProductsWindow.xaml;;
+FC:\src\DemoApp\DemoApp\CaptchaWindow.xaml;;
+FC:\src\DemoApp\DemoApp\EditProductsWindow.xaml;;
+FC:\src\DemoApp\DemoApp\LoginWindow.xaml;;
+FC:\src\DemoApp\DemoApp\ProductsWindow.xaml;;
 

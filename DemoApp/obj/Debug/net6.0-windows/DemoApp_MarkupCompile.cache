@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\2904\DemoApp\obj\Debug\net6.0-windows\
+C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\
 DemoApp
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\2904\DemoApp\App.xaml
-41918289572
+C:\src\DemoApp\DemoApp\App.xaml
+52115301259
 
-21-968320169
-222-32876765
-CaptchaWindow.xaml;EditProductsWindow.xaml;LoginWindow.xaml;ProductsWindow.xaml;
+221944511167
+228-1182586632
+AddProductsWindow.xaml;CaptchaWindow.xaml;EditProductsWindow.xaml;LoginWindow.xaml;ProductsWindow.xaml;
 
 False
 
