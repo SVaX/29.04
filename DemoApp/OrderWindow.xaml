@@ -21,9 +21,33 @@
 
         <Button Grid.Row="0" Grid.Column="1" Content="Назад" x:Name="backButton" Click="backButton_Click"/>
 
-        <Button Content="Загрузить в пдф" Grid.Column="2" x:Name="pdfButton" Click="pdfButton_Click"/>
+        <Button Content="Загрузить в пдф" Grid.Column="2" x:Name="pdfButton" Click="pdfButton_Click" IsEnabled="False"/>
 
-        <Grid Grid.Row="1" Grid.ColumnSpan="3">
+        <Grid Grid.Row="1" Grid.Column="1" x:Name="grid1" IsEnabled="True">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Пункт выдачи:"/>
+            <ComboBox x:Name="pickupPoint" SelectionChanged="pickupPoint_SelectionChanged" Grid.Row="1"/>
+            <Label Content="Сумма заказа: " x:Name="orderTotalLabel" Grid.Row="2"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="2" x:Name="Grid2" IsEnabled="True">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="Дата доставки:"/>
+            <Label x:Name="deliveryDate" Grid.Row="1"/>
+            <Button x:Name="confimButton" Grid.Row="2" Content="Подтвердить" Click="confimButton_Click"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="3" x:Name="Grid3" IsEnabled="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="2*"/>
@@ -41,7 +65,7 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
-                            <TextBox x:Name="productnameLabel" Text="{Binding Product.ProductName}" Grid.ColumnSpan="3" Grid.Row="0"/>
+                            <TextBox x:Name="productnameLabel" Text="{Binding Product.ProductName}" IsEnabled="false" Grid.ColumnSpan="3" Grid.Row="0"/>
                             <Button x:Name="removeButton" Content="-" Grid.Row="1" Grid.Column="0" Click="removeButton_Click"/>
                             <Label x:Name="quantityLabel" Content="{Binding Count}" Grid.Column="1" Grid.Row="1"/>
                             <Button x:Name="addButton" Content="+" Grid.Row="1" Grid.Column="2" Click="addButton_Click"/>

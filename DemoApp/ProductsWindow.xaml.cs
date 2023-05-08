@@ -31,16 +31,34 @@ namespace DemoApp
 		/// </summary>
 		public DemoDbContext db = new DemoDbContext();
 
+		/// <summary>
+		/// Список товаров.
+		/// </summary>
 		List<Product> productList = new List<Product>();
 
+		/// <summary>
+		/// Список товаров после поиска.
+		/// </summary>
 		List<Product> foundProducts = new List<Product>();
 
+		/// <summary>
+		/// Текущий заказ.
+		/// </summary>
 		Order _currentOrder;
 
+		/// <summary>
+		/// Авторизован ли пользователь.
+		/// </summary>
 		private bool _authorized;
 
+		/// <summary>
+		/// Видимость кнопки "Заказ".
+		/// </summary>
 		private bool _visibility;
 
+		/// <summary>
+		/// Существует ли заказ.
+		/// </summary>
 		private bool _orderExists;
 
 		/// <summary>
@@ -107,9 +125,17 @@ namespace DemoApp
 				product.ProductPhoto =product.ProductPhoto.Replace("/Resources/", "");
 			}
 
+			if (_currentUser.UserId == 0)
+			{
+				_currentOrder.UserId = null;
+			}
+
 			SetOrderButtonVisibility();
 		}
 
+		/// <summary>
+		/// Устанавливает видимость кнопки "Заказ".
+		/// </summary>
 		private void SetOrderButtonVisibility()
         {
 			foreach (var ord in db.Orders)
@@ -194,6 +220,9 @@ namespace DemoApp
 			}
 		}
 
+		/// <summary>
+		/// Сортировка по поиску.
+		/// </summary>
 		private void searchTextBox_TextChanged(object sender, TextChangedEventArgs e)
 		{
 			foundProducts = productList.Where(p => p.ProductName.ToLower().Contains(searchTextBox.Text.ToLower())).ToList();
@@ -201,16 +230,25 @@ namespace DemoApp
 			updateAfterSearch();
 		}
 
+		/// <summary>
+		/// Обновляет число отображаемых записей.
+		/// </summary>
 		private void updateRecordAmount()
 		{
 			recordAmountLabel.Content = $"{productsList.Items.Count} из {productList.Count}";
 		}
 
+		/// <summary>
+		/// Обновляет число отображаемых записей после поиска.
+		/// </summary>
 		private void updateAfterSearch()
 		{
 			recordAmountLabel.Content = $"{productsList.Items.Count} из {foundProducts.Count}";
 		}
 
+		/// <summary>
+		/// Открывает окно редактирования если у пользователя есть права.
+		/// </summary>
         private void productsList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 			if (_currentUser != null && _currentUser.RoleId == 2)
@@ -225,6 +263,9 @@ namespace DemoApp
 			}
 		}
 
+		/// <summary>
+		/// Открывает окно добавления нового товара если у пользователя есть права.
+		/// </summary>
 		private void addButton_Click(object sender, RoutedEventArgs e)
 		{
 			var window = new AddProductsWindow(_currentUser);
@@ -232,11 +273,16 @@ namespace DemoApp
 			this.Close();
 		}
 
+		/// <summary>
+		/// Добавляет товар в заказ.
+		/// </summary>
         private void addToOrderButton_Click(object sender, RoutedEventArgs e)
         {
 			Order order;
 			var product = new Product();
+			var foundOrder = false;
 
+			/// Ищет выбранный товар.
 			foreach (var item in db.Products)
             {
 				if (item == productsList.SelectedValue)
@@ -244,7 +290,8 @@ namespace DemoApp
 					product = item;
 				}
             }
-			var foundOrder = false;
+
+			/// Проверяет есть ли уже заказ у пользователя, формирование которого не было закончено.
 			foreach (var ord in db.Orders)
             {
 				if (ord.UserId == _currentUser.UserId && ord.OrderStatusId == 1 )
@@ -264,6 +311,7 @@ namespace DemoApp
                 }
             }
 
+			/// Если заказ уже есть, то продолжится его наполнение.
 			if (foundOrder)
             {
 				foreach (var ordprod in db.OrderProducts.ToList())
@@ -283,12 +331,11 @@ namespace DemoApp
 				MessageBox.Show("Товар успешно добавлен в корзину!");
 				return;
 			}
-			int? userId = _currentUser.UserId;
-			if (_currentUser.UserId == 0)
-            {
-				userId = null;
-            }
 
+			/// Получает Id пользователя, на случай если он не авторизован в системе, чтобы в дальнейшем передать null.
+			int? userId = _currentUser.UserId;
+
+			/// Создает новый заказ, если пользователь не делал их до этого.
 			order = new Order()
 			{
 				OrderCreateDate = DateTime.Now,
@@ -319,6 +366,9 @@ namespace DemoApp
 			return;
         }
 
+		/// <summary>
+		/// Открывает окно заказа.
+		/// </summary>
         private void orderButton_Click(object sender, RoutedEventArgs e)
         {
 			var window = new OrderWindow(_authorized, _currentUser, _currentOrder);

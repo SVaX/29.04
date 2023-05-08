@@ -43,7 +43,10 @@ namespace DemoApp
 
             InitTextBoxes();
         }
-
+        
+        /// <summary>
+        /// Кнопка назад.
+        /// </summary>
         private void backButton_Click(object sender, RoutedEventArgs e)
         {
             var window = new ProductsWindow(true, _currentUser);
@@ -51,6 +54,9 @@ namespace DemoApp
             this.Close();
         }
 
+        /// <summary>
+        /// Кнопка "Удалить".
+        /// </summary>
         private void deleteButton_Click(object sender, RoutedEventArgs e)
         {
             OrderProduct orderProduct = db.OrderProducts.Where(op => op.ProductId == _currentProduct.ProductId).FirstOrDefault();
@@ -71,6 +77,9 @@ namespace DemoApp
             this.Close();
         }
 
+        /// <summary>
+        /// Сохраняет изменения.
+        /// </summary>
         private void saveButton_Click(object sender, RoutedEventArgs e)
         {
             TextBox[] textBoxes = new TextBox[]
@@ -123,6 +132,10 @@ namespace DemoApp
             return;
         }
 
+        /// <summary>
+        /// Проверяет корректность ввода поставщика и производителя.
+        /// </summary>
+        /// <returns>True, если ввод корректен.</returns>
         private bool  ValidateManufacturerAndSupplier(ProductManufacturer man, ProductSupplier sup)
         {
             if (db.ProductManufacturers.Contains(man) && db.ProductSuppliers.Contains(sup))
@@ -132,6 +145,9 @@ namespace DemoApp
             return false;
         }
 
+        /// <summary>
+        /// Выбор картинки.
+        /// </summary>
         private void selectImage_Click(object sender, RoutedEventArgs e)
         {
             var ofd = new OpenFileDialog();
@@ -166,6 +182,10 @@ namespace DemoApp
                 InitImage();
             }
         }
+
+        /// <summary>
+        /// Инициализирует картинку.
+        /// </summary>
         private void InitImage()
         {
             BitmapImage imageSource = new BitmapImage();
@@ -189,6 +209,9 @@ namespace DemoApp
             productPhoto.Source = imageSource;
         }
 
+        /// <summary>
+        /// Инициализирует поставщика и производителя для текущего выбранного товара.
+        /// </summary>
         private void InitSupplierAndManufacturer()
         {
             foreach (ProductManufacturer man in db.ProductManufacturers)
@@ -208,6 +231,9 @@ namespace DemoApp
             }
         }
 
+        /// <summary>
+        /// Инициализирует данные из БД.
+        /// </summary>
         private void InitTextBoxes()
         {
             articleTextBox.Text = _currentProduct.ProductArticleNumber.ToString();
@@ -221,6 +247,9 @@ namespace DemoApp
             descriptionTextBox.Text = _currentProduct.ProductDescription.ToString();
         }
 
+        /// <summary>
+        /// Инициализирует значения для выпадающих списков.
+        /// </summary>
         private void InitComboBoxes()
         {
             foreach(ProductCategory category in db.ProductCategories)
@@ -243,6 +272,9 @@ namespace DemoApp
             }
         }
 
+        /// <summary>
+        /// Записывает выбранное значение для меры исчисления.
+        /// </summary>
 		private void unitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			try
@@ -261,6 +293,9 @@ namespace DemoApp
 			}
 		}
 
+        /// <summary>
+        /// Записывает выбранное значение категории.
+        /// </summary>
 		private void categoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			try

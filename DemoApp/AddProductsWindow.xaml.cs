@@ -37,6 +37,9 @@ namespace DemoApp
 
 		}
 
+		/// <summary>
+		/// Инициализация выпадающих списков.
+		/// </summary>
 		private void InitComboBoxes()
 		{
 			foreach (ProductCategory category in db.ProductCategories)
@@ -53,6 +56,13 @@ namespace DemoApp
 				_currentProduct.UnitType = unitType;
 			}
 		}
+
+		/// <summary>
+		/// Проверка на валидность поставщиков и производителей.
+		/// </summary>
+		/// <param name="man">Производитель</param>
+		/// <param name="sup">Поставщик</param>
+		/// <returns></returns>
 		private bool ValidateManufacturerAndSupplier(ProductManufacturer man, ProductSupplier sup)
 		{
 			if (db.ProductManufacturers.Contains(man) && db.ProductSuppliers.Contains(sup))
@@ -62,6 +72,9 @@ namespace DemoApp
 			return false;
 		}
 
+		/// <summary>
+		/// Кнопка "Назад"
+		/// </summary>
 		private void backButton_Click(object sender, RoutedEventArgs e)
 		{
 			var window = new ProductsWindow(true, _currentUser);
@@ -69,6 +82,9 @@ namespace DemoApp
 			this.Close();
 		}
 
+		/// <summary>
+		/// Кнопка "Сохранить"
+		/// </summary>
 		private void saveButton_Click(object sender, RoutedEventArgs e)
 		{
 			TextBox[] textBoxes = new TextBox[]
@@ -147,6 +163,9 @@ namespace DemoApp
 			return;
 		}
 
+		/// <summary>
+		/// Выбор картинки.
+		/// </summary>
 		private void selectImage_Click(object sender, RoutedEventArgs e)
 		{
 			var ofd = new OpenFileDialog();
@@ -178,6 +197,9 @@ namespace DemoApp
 			}
 		}
 
+		/// <summary>
+		/// Выбор типа исчисления товара.
+		/// </summary>
 		private void unitTypeComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			try
@@ -196,6 +218,9 @@ namespace DemoApp
 			}
 		}
 
+		/// <summary>
+		/// Выбор категории товара.
+		/// </summary>
 		private void categoryComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			try

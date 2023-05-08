@@ -107,6 +107,10 @@ namespace DemoApp
 			this.Close();
 		}
 
+		/// <summary>
+		/// Проверка на количество попыток войти в систему.
+		/// </summary>
+		/// <returns>True, если кол-во попыток превышено.</returns>
 		private bool checkIfLoginTriesAreMore()
 		{
 			if (_loginTries == 2)
