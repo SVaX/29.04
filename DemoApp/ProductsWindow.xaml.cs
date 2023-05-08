@@ -35,12 +35,20 @@ namespace DemoApp
 
 		List<Product> foundProducts = new List<Product>();
 
+		Order _currentOrder;
+
+		private bool _authorized;
+
+		private bool _visibility;
+
+		private bool _orderExists;
+
 		/// <summary>
 		/// Инициализация окна
 		/// </summary>
 		/// <param name="Authorized">Авторизован ли пользователь</param>
 		/// <param name="user">Пользователь.</param>
-		public ProductsWindow(bool Authorized, User? user)
+		public ProductsWindow(bool Authorized, User? user, bool visibilitySet = false, bool orderExists = false, Order? order = null)
 		{
 			InitializeComponent();
 
@@ -50,6 +58,17 @@ namespace DemoApp
 			{
 				_currentUser = user;
 			}
+
+			_visibility = visibilitySet;
+
+			_authorized = Authorized;
+
+			_orderExists = orderExists;
+
+			if (order != null)
+            {
+				_currentOrder = order;
+            }
 
 			foreach (Product product in productList)
 			{
@@ -81,6 +100,26 @@ namespace DemoApp
 			if (_currentUser.RoleId == 2)
 			{
 				addButton.Visibility = Visibility.Visible;
+			}
+
+			foreach (Product product in productList)
+			{
+				product.ProductPhoto =product.ProductPhoto.Replace("/Resources/", "");
+			}
+
+			SetOrderButtonVisibility();
+		}
+
+		private void SetOrderButtonVisibility()
+        {
+			foreach (var ord in db.Orders)
+			{
+				if (_authorized && ord.UserId == _currentUser.UserId && ord.OrderStatusId == 1 || _visibility)
+				{
+					orderButton.Visibility = Visibility.Visible;
+					_currentOrder = ord;
+					return;
+				}
 			}
 		}
 
@@ -192,5 +231,99 @@ namespace DemoApp
 			window.Show();
 			this.Close();
 		}
-	}
+
+        private void addToOrderButton_Click(object sender, RoutedEventArgs e)
+        {
+			Order order;
+			var product = new Product();
+
+			foreach (var item in db.Products)
+            {
+				if (item == productsList.SelectedValue)
+                {
+					product = item;
+				}
+            }
+			var foundOrder = false;
+			foreach (var ord in db.Orders)
+            {
+				if (ord.UserId == _currentUser.UserId && ord.OrderStatusId == 1 )
+                {
+					_currentOrder = ord;
+					foundOrder = true;
+					break;
+                }
+				if (_orderExists)
+                {
+					if (ord.OrderId == _currentOrder.OrderId)
+                    {
+						foundOrder = true;
+						_currentOrder = ord;
+						break;
+					}
+                }
+            }
+
+			if (foundOrder)
+            {
+				foreach (var ordprod in db.OrderProducts.ToList())
+				{
+					if (ordprod.ProductId == product.ProductId && ordprod.OrderId == _currentOrder.OrderId)
+					{
+						ordprod.Count++;
+						db.Entry(ordprod).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+						db.SaveChanges();
+						MessageBox.Show("Товар успешно добавлен в корзину!");
+						return;
+					}
+				}
+
+				db.OrderProducts.Add(new OrderProduct() { OrderId = _currentOrder.OrderId, Count = 1, ProductId = product.ProductId });
+				db.SaveChanges();
+				MessageBox.Show("Товар успешно добавлен в корзину!");
+				return;
+			}
+			int? userId = _currentUser.UserId;
+			if (_currentUser.UserId == 0)
+            {
+				userId = null;
+            }
+
+			order = new Order()
+			{
+				OrderCreateDate = DateTime.Now,
+				OrderStatusId = 1,
+				UserId = userId,
+				
+				OrderGetCode = db.Orders.OrderByDescending(o => o.OrderGetCode).First().OrderGetCode + 1,
+				PickupPointId = 1,
+				OrderDeliveryDate = DateTime.Now
+			};
+
+			db.Orders.Add(order);
+			db.SaveChanges();
+
+			var orderProduct = new OrderProduct()
+			{
+				OrderId = order.OrderId,
+				ProductId = product.ProductId,
+				Count = 1
+			};
+			db.OrderProducts.Add(orderProduct);
+			db.SaveChanges();
+			
+			_currentOrder = order;
+			_orderExists = true;
+			orderButton.Visibility = Visibility.Visible;
+			MessageBox.Show("Заказ создан, товар успешно добавлен!");
+			return;
+        }
+
+        private void orderButton_Click(object sender, RoutedEventArgs e)
+        {
+			var window = new OrderWindow(_authorized, _currentUser, _currentOrder);
+			window.Show();
+			this.Close();
+        }
+    }
 }

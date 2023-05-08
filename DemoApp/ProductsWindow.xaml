@@ -25,6 +25,7 @@
 		<Grid.RowDefinitions>
 			<RowDefinition Height="1*"/>
 			<RowDefinition Height="8*"/>
+            <RowDefinition Height="1*"/>
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition/>
@@ -35,13 +36,24 @@
 			<ColumnDefinition/>
 		</Grid.ColumnDefinitions>
 		<Button Content="Назад" Grid.Row="0" x:Name="backButton" Click="backButton_Click"/>
+        
 		<ComboBox x:Name="discountFilterComboBox" Grid.Row="0" Grid.Column="1" SelectionChanged="filterComboBox_SelectionChanged"/>
 		<ComboBox x:Name="costFilterComboBox" Grid.Row="0" Grid.Column="2" SelectionChanged="costFilterComboBox_SelectionChanged"/>
+        
 		<TextBox x:Name="searchTextBox" Grid.Row="0" Grid.Column="3" TextChanged="searchTextBox_TextChanged"/>
+        
 		<Button x:Name="addButton" Content="Добавить товар" Grid.Row="0" Grid.Column="5" Visibility="Hidden"  Click="addButton_Click"/>
+        
 		<Label x:Name="recordAmountLabel" Grid.Row="0" Grid.Column="4"/>
+        
 		<ListView Grid.ColumnSpan="6" Grid.Row="1" x:Name="productsList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" HorizontalContentAlignment="Stretch" SelectionChanged="productsList_SelectionChanged">
-			<ListView.ItemTemplate>
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Добавить к заказу" x:Name="addToOrderButton" Click="addToOrderButton_Click"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            
+            <ListView.ItemTemplate>
 				<DataTemplate>
                     <Border BorderBrush="Black" BorderThickness="1" Style="{StaticResource mainBorder}" >
 						<Grid>
@@ -50,9 +62,11 @@
 								<ColumnDefinition Width="6*"/>
 								<ColumnDefinition Width="2*"/>
 							</Grid.ColumnDefinitions>
+                            
 							<Border BorderBrush="Black" BorderThickness="1" Grid.Column="0">
                                 <Image Source="{Binding Path=ProductPhoto, FallbackValue={StaticResource nullImage}}"/>
 							</Border>
+                            
 							<Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
 								<Grid>
 									<Grid.RowDefinitions>
@@ -67,13 +81,16 @@
                                     <Label Grid.Row="3" Content="{Binding ProductCost}"/>
 								</Grid>
 							</Border>
-							<Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
+
+                            <Border Grid.RowSpan="4" Grid.Column="2" BorderBrush="Black" BorderThickness="1">
                                 <Label Content="{Binding ProductDiscountAmount}"/>
-							</Border>
-						</Grid>
+                            </Border>
+                        </Grid>
 					</Border>
 				</DataTemplate>
 			</ListView.ItemTemplate>
 		</ListView>
-	</Grid>
+
+        <Button Content="К заказу" Visibility="Hidden" Grid.Row="2" Grid.Column="4" Grid.ColumnSpan="2" x:Name="orderButton" Click="orderButton_Click"/>
+    </Grid>
 </Window>

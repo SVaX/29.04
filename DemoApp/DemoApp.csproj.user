@@ -7,13 +7,13 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="AddProductsWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="CaptchaWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="EditProductsWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="OrderWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Update="ProductsWindow.xaml.cs">
@@ -21,9 +21,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="AddProductsWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Update="EditProductsWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
@@ -31,6 +28,9 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Update="CaptchaWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="OrderWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ProductsWindow.xaml">

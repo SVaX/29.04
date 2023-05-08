@@ -154,3 +154,8 @@ C:\src\DemoApp\DemoApp\bin\Debug\net6.0-windows\Microsoft.NET.StringTools.dll
 C:\src\DemoApp\DemoApp\bin\Debug\net6.0-windows\System.Reflection.MetadataLoadContext.dll
 C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\AddProductsWindow.g.cs
 C:\src\DemoApp\DemoApp\obj\Debug\net6.0-windows\AddProductsWindow.baml
+C:\2904\DemoApp\bin\Debug\net6.0-windows\Microsoft.Build.dll
+C:\2904\DemoApp\obj\Debug\net6.0-windows\AddProductsWindow.g.cs
+C:\2904\DemoApp\obj\Debug\net6.0-windows\AddProductsWindow.baml
+C:\2904\DemoApp\obj\Debug\net6.0-windows\OrderWindow.g.cs
+C:\2904\DemoApp\obj\Debug\net6.0-windows\OrderWindow.baml
